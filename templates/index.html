@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты комиссии</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <!-- Кнопка для входа -->
+            <div class="right-buttons">
+            
+            <div id="auth-info" data-auth="{{ current_user.is_authenticated }}"></div>
+
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}"><button class="logout-button">Выйти</button></a>
+                <a href="{{ url_for('add_student') }}"><button class="add-student-button">Добавить студента</button></a>
+                
+            
+            {% else %}
+                <button class="login-button" onclick="redirectToLogin()">Войти</button>
+            {% endif %}
+        </div>  
+        </div>
+        <h1>Результаты комиссии</h1>
+        <!-- Выбор специализации -->
+        <div>
+            <label for="specialization-select">Выберите специализацию:</label>
+            <select id="specialization-select">
+                <option value="ПО">ПО</option>
+                <option value="ВТ">ВТ</option>
+            </select>
+        </div>
+        <!-- Выбор языка обучения -->
+        <div>
+            <label for="language-select">Выберите язык обучения:</label>
+            <select id="language-select">
+                <option value="русский">Русский</option>
+                <option value="казахский">Казахский</option>
+            </select>
+        </div>
+        <!-- Кнопка применить -->
+        <div>
+            <button id="apply-button" onclick="filterGroup()">Применить</button>
+        </div>
+        <!-- Таблица результатов -->
+        <div id="results-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ФИО</th>
+                        <th>Специальность</th>
+                        <th>Язык обучения</th>
+                        <th>Средняя оценка за проф. предметы</th>
+                        <th>Общая средняя оценка</th>
+                        <th>Дата подачи заявки</th> <!-- Добавлен новый столбец -->
+                        {% if current_user.is_authenticated %}
+                        <th>Действия над студентом</th> <!-- Добавлен новый столбец -->
+
+                        {% endif %}
+
+                    </tr>
+                </thead>
+                <tbody id="results-body">
+                    <!-- Данные будут добавлены с помощью JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+</body>
+</html>
